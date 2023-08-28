@@ -6,6 +6,12 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+const (
+	segmentsTable   = "segments"
+	userSegTable    = "user_segments"
+	operationsTable = "operations"
+)
+
 type Config struct {
 	Host     string
 	Port     string

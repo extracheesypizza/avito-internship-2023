@@ -1,14 +1,29 @@
 package service
 
-import "avito-app/pkg/repository"
+import (
+	"avito-app"
+	"avito-app/pkg/repository"
+)
 
-type UserList interface {
+type Segment interface {
+	CreateSegment(seg avito.Segment) (int, error)
+	DeleteSegment(seg avito.Segment) (int, error)
+}
+
+type User interface {
+	GetUserSegments(usr_id int) ([]string, error)
+	AddUserToSegment(usr avito.User) (int, error)
+	DeleteUserFromSegment(usr avito.User) (int, error)
 }
 
 type Service struct {
-	UserList
+	User
+	Segment
 }
 
 func NewService(repos *repository.Repository) *Service {
-	return &Service{}
+	return &Service{
+		User:    NewUserService(repos.User),
+		Segment: NewSegmentService(repos.Segment),
+	}
 }

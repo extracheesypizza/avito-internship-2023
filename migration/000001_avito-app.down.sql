@@ -1,3 +1,5 @@
-DROP TABLE user_groups;
-
 DROP TABLE operations;
+
+DROP TABLE user_segments;
+
+DROP TABLE segments;

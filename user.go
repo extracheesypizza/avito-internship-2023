@@ -1,5 +1,7 @@
 package avito
 
 type User struct {
-	Id int `json:"-"`
+	Id        int      `json:"id" binding:"required"`
+	Seg_names []string `json:"seg_names"`
+	TTL       int      `json:"TTL"`
 }
