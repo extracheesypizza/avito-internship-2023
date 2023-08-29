@@ -17,6 +17,13 @@ import (
 	"github.com/spf13/viper"
 )
 
+// @title Avito App API
+// @version 1.0
+// @description API Server for Avito Backend Internship Task
+
+// @host localhost:8000
+// @BasePath /
+
 func main() {
 	// read config file
 	if err := initConfig(); err != nil {

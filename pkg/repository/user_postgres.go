@@ -20,9 +20,8 @@ func (r *UserPostgres) GetUserSegments(usr_id int) ([]string, error) {
 	slice := []string{}
 
 	// get user segments
-	query := fmt.Sprintf("SELECT DISTINCT seg_name FROM %s WHERE seg_id in (SELECT DISTINCT seg_id FROM %s WHERE (user_id = $1 AND current_timestamp BETWEEN at_timestamp AND (at_timestamp + TTL * interval '1 second')))", segmentsTable, operationsTable)
+	query := fmt.Sprintf("SELECT DISTINCT seg_name FROM %s WHERE seg_id in (SELECT DISTINCT seg_id FROM %s WHERE (user_id = $1 AND ((current_timestamp BETWEEN at_timestamp AND (at_timestamp + TTL * interval '1 second') OR TTL = 0))))", segmentsTable, operationsTable)
 	err := r.db.Select(&slice, query, usr_id)
-
 	return slice, err
 }
 
