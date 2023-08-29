@@ -2,7 +2,6 @@ package handler
 
 import (
 	"avito-app"
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -23,7 +22,7 @@ import (
 // @Router /user/getSegments/{id} [get]
 func (h *Handler) getUserSegments(c *gin.Context) {
 	usr_id, err := strconv.Atoi(c.Param("id"))
-	fmt.Println("user.go: ", usr_id)
+
 	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
