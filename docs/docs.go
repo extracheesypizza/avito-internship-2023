@@ -252,6 +252,68 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/getActions/": {
+            "post": {
+                "description": "Get Actions the User was involved in",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get User Actions By ID and Date",
+                "operationId": "get-actions",
+                "parameters": [
+                    {
+                        "description": "User ID and Date",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/avito.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/user/getSegments/{id}": {
             "get": {
                 "description": "Get Segments the User is in",
@@ -320,6 +382,9 @@ const docTemplate = `{
                 "seg_name"
             ],
             "properties": {
+                "chance": {
+                    "type": "integer"
+                },
                 "seg_name": {
                     "type": "string"
                 }
@@ -337,11 +402,17 @@ const docTemplate = `{
                 "id": {
                     "type": "integer"
                 },
+                "month": {
+                    "type": "integer"
+                },
                 "seg_names": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     }
+                },
+                "year": {
+                    "type": "integer"
                 }
             }
         },

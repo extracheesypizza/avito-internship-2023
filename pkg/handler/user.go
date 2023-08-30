@@ -37,6 +37,35 @@ func (h *Handler) getUserSegments(c *gin.Context) {
 	c.JSON(http.StatusOK, slice)
 }
 
+// @Summary Get User Actions By ID and Date
+// @Tags User
+// @Description Get Actions the User was involved in
+// @ID get-actions
+// @Accept  json
+// @Produce  json
+// @Param input body avito.User true "User ID and Date"
+// @Success 200 {array} string
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /user/getActions/ [post]
+func (h *Handler) getUserActions(c *gin.Context) {
+	var input avito.User
+
+	if err := c.BindJSON(&input); err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	slice, err := h.services.GetUserActions(input)
+	if err != nil {
+		newErrorResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, slice)
+}
+
 // @Summary Add User to Segment(s)
 // @Tags User
 // @Description Add Segments to User's list

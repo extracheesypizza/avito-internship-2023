@@ -12,6 +12,7 @@ type Segment interface {
 
 type User interface {
 	GetUserSegments(usr_id int) ([]string, error)
+	GetUserActions(usr avito.User) ([]string, error)
 	AddUserToSegment(usr avito.User) (int, error)
 	DeleteUserFromSegment(usr avito.User) (int, error)
 }

@@ -24,3 +24,7 @@ func (s *UserService) DeleteUserFromSegment(usr avito.User) (int, error) {
 func (s *UserService) GetUserSegments(usr_id int) ([]string, error) {
 	return s.repo.GetUserSegments(usr_id)
 }
+
+func (s *UserService) GetUserActions(usr avito.User) ([]string, error) {
+	return s.repo.GetUserActions(usr)
+}
