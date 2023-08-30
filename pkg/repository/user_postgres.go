@@ -24,7 +24,6 @@ func (r *UserPostgres) GetUserSegments(usr_id int) ([]string, error) {
 	query := fmt.Sprintf("DELETE FROM %s WHERE user_id = $1 AND seg_id in (SELECT DISTINCT seg_id FROM %s WHERE (operation = 'DEL' AND user_id = $1 AND (current_timestamp > at_timestamp))) ", userSegTable, operationsTable)
 	row := r.db.QueryRow(query, usr_id)
 	if err := row.Scan(&id); id != 0 && err != nil {
-		fmt.Println(id)
 		return []string{}, err
 	}
 
