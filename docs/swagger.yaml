@@ -1,0 +1,295 @@
+basePath: /
+definitions:
+  avito.Segment:
+    properties:
+      chance:
+        type: integer
+      seg_name:
+        type: string
+    required:
+    - seg_name
+    type: object
+  avito.SegmentRemove:
+    properties:
+      seg_name:
+        type: string
+    type: object
+  avito.UserAddToSegment:
+    properties:
+      id:
+        type: integer
+      seg_names:
+        items:
+          type: string
+        type: array
+      ttl:
+        type: integer
+    type: object
+  avito.UserGetActions:
+    properties:
+      id:
+        type: integer
+      month:
+        type: integer
+      year:
+        type: integer
+    type: object
+  avito.UserRemoveFromSegment:
+    properties:
+      id:
+        type: integer
+      seg_names:
+        items:
+          type: string
+        type: array
+    type: object
+  handler.errorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: API Server for Avito Backend Internship Task
+  title: Avito App API
+  version: "1.0"
+paths:
+  /segment/create/:
+    post:
+      consumes:
+      - application/json
+      description: Creates a segment with a given name
+      operationId: create-segment
+      parameters:
+      - description: Segment's name
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/avito.Segment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Create a Segment
+      tags:
+      - Segment
+  /segment/delete/:
+    post:
+      consumes:
+      - application/json
+      description: Deletes a segment with a given name
+      operationId: delete-segment
+      parameters:
+      - description: Segment's name
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/avito.SegmentRemove'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Delete a Segment
+      tags:
+      - Segment
+  /user/addToSegment/:
+    post:
+      consumes:
+      - application/json
+      description: Adds user with a given UserID to specified segment(s)
+      operationId: add-user-to-segments
+      parameters:
+      - description: UserID and segment name(s)
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/avito.UserAddToSegment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Add User to Segment(s)
+      tags:
+      - User
+  /user/getActions/:
+    post:
+      consumes:
+      - application/json
+      description: Get Actions the User was involved in
+      operationId: get-actions
+      parameters:
+      - description: User ID and Date (Month and Year)
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/avito.UserGetActions'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: View User's Actions
+      tags:
+      - User
+  /user/getSegments/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Returns segments the user with given UserID is in
+      operationId: get-segments
+      parameters:
+      - description: User's ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Get User Segments By ID
+      tags:
+      - User
+  /user/removeFromSegment/:
+    post:
+      consumes:
+      - application/json
+      description: Removes user with a given UserID from specified segment(s)
+      operationId: remove-user-from-segments
+      parameters:
+      - description: UserID and segment name(s)
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/avito.UserRemoveFromSegment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Remove User from Segment(s)
+      tags:
+      - User
+swagger: "2.0"
