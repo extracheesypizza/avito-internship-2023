@@ -17,8 +17,8 @@ func (s *UserService) AddUserToSegment(usr avito.User) (int, error) {
 	return s.repo.AddUserToSegment(usr)
 }
 
-func (s *UserService) DeleteUserFromSegment(usr avito.User) (int, error) {
-	return s.repo.DeleteUserFromSegment(usr)
+func (s *UserService) RemoveUserFromSegment(usr avito.User) (int, error) {
+	return s.repo.RemoveUserFromSegment(usr)
 }
 
 func (s *UserService) GetUserSegments(usr_id int) ([]string, error) {

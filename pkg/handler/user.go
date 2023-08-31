@@ -10,7 +10,7 @@ import (
 
 // @Summary Get User Segments By ID
 // @Tags User
-// @Description Get Segments the User is in
+// @Description Returns segments the user with given UserID is in
 // @ID get-segments
 // @Accept  json
 // @Produce  json
@@ -37,13 +37,13 @@ func (h *Handler) getUserSegments(c *gin.Context) {
 	c.JSON(http.StatusOK, slice)
 }
 
-// @Summary Get User Actions By ID and Date
+// @Summary View User's Actions
 // @Tags User
 // @Description Get Actions the User was involved in
 // @ID get-actions
 // @Accept  json
 // @Produce  json
-// @Param input body avito.User true "User ID and Date"
+// @Param input body avito.UserGetActions true "User ID and Date (Month and Year)"
 // @Success 200 {array} string
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
@@ -68,11 +68,11 @@ func (h *Handler) getUserActions(c *gin.Context) {
 
 // @Summary Add User to Segment(s)
 // @Tags User
-// @Description Add Segments to User's list
+// @Description Adds user with a given UserID to specified segment(s)
 // @ID add-user-to-segments
 // @Accept  json
 // @Produce  json
-// @Param input body avito.User true "User ID and segments"
+// @Param input body avito.UserAddToSegment true "UserID and segment name(s)"
 // @Success 200 {integer} integer 1
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
@@ -99,17 +99,17 @@ func (h *Handler) addUserToSegment(c *gin.Context) {
 
 // @Summary Remove User from Segment(s)
 // @Tags User
-// @Description Remove Segments from User's list
+// @Description Removes user with a given UserID from specified segment(s)
 // @ID remove-user-from-segments
 // @Accept  json
 // @Produce  json
-// @Param input body avito.User true "User ID and segments"
+// @Param input body avito.UserRemoveFromSegment true "UserID and segment name(s)"
 // @Success 200 {integer} integer 1
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
-// @Router /user/deleteFromSegment [post]
-func (h *Handler) deleteUserFromSegment(c *gin.Context) {
+// @Router /user/removeFromSegment [post]
+func (h *Handler) removeUserFromSegment(c *gin.Context) {
 	var input avito.User
 
 	if err := c.BindJSON(&input); err != nil {
@@ -117,7 +117,7 @@ func (h *Handler) deleteUserFromSegment(c *gin.Context) {
 		return
 	}
 
-	id, err := h.services.User.DeleteUserFromSegment(input)
+	id, err := h.services.User.RemoveUserFromSegment(input)
 	if err != nil {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return

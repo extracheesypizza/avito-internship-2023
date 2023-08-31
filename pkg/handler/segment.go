@@ -9,12 +9,12 @@ import (
 
 // @Summary Create a Segment
 // @Tags Segment
-// @Description Create a Segment
+// @Description Creates a segment with a given name
 // @ID create-segment
 // @Accept  json
 // @Produce  json
 // @Param input body avito.Segment true "Segment's name"
-// @Success 200 {integer} integer 1
+// @Success 200 {integer} integer 200
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
@@ -40,12 +40,12 @@ func (h *Handler) createSegment(c *gin.Context) {
 
 // @Summary Delete a Segment
 // @Tags Segment
-// @Description Delete a Segment
+// @Description Deletes a segment with a given name
 // @ID delete-segment
 // @Accept  json
 // @Produce  json
-// @Param input body avito.Segment true "Segment's name"
-// @Success 200 {integer} integer 1
+// @Param input body avito.SegmentRemove true "Segment's name"
+// @Success 200 {integer} integer 200
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse

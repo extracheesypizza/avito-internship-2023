@@ -9,22 +9,39 @@ definitions:
     required:
     - seg_name
     type: object
-  avito.User:
+  avito.SegmentRemove:
     properties:
-      TTL:
-        type: integer
+      seg_name:
+        type: string
+    type: object
+  avito.UserAddToSegment:
+    properties:
       id:
-        type: integer
-      month:
         type: integer
       seg_names:
         items:
           type: string
         type: array
+      ttl:
+        type: integer
+    type: object
+  avito.UserGetActions:
+    properties:
+      id:
+        type: integer
+      month:
+        type: integer
       year:
         type: integer
-    required:
-    - id
+    type: object
+  avito.UserRemoveFromSegment:
+    properties:
+      id:
+        type: integer
+      seg_names:
+        items:
+          type: string
+        type: array
     type: object
   handler.errorResponse:
     properties:
@@ -42,7 +59,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: Create a Segment
+      description: Creates a segment with a given name
       operationId: create-segment
       parameters:
       - description: Segment's name
@@ -81,7 +98,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: Delete a Segment
+      description: Deletes a segment with a given name
       operationId: delete-segment
       parameters:
       - description: Segment's name
@@ -89,7 +106,7 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/avito.Segment'
+          $ref: '#/definitions/avito.SegmentRemove'
       produces:
       - application/json
       responses:
@@ -120,15 +137,15 @@ paths:
     post:
       consumes:
       - application/json
-      description: Add Segments to User's list
+      description: Adds user with a given UserID to specified segment(s)
       operationId: add-user-to-segments
       parameters:
-      - description: User ID and segments
+      - description: UserID and segment name(s)
         in: body
         name: input
         required: true
         schema:
-          $ref: '#/definitions/avito.User'
+          $ref: '#/definitions/avito.UserAddToSegment'
       produces:
       - application/json
       responses:
@@ -155,45 +172,6 @@ paths:
       summary: Add User to Segment(s)
       tags:
       - User
-  /user/deleteFromSegment:
-    post:
-      consumes:
-      - application/json
-      description: Remove Segments from User's list
-      operationId: remove-user-from-segments
-      parameters:
-      - description: User ID and segments
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/avito.User'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: integer
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-        default:
-          description: ""
-          schema:
-            $ref: '#/definitions/handler.errorResponse'
-      summary: Remove User from Segment(s)
-      tags:
-      - User
   /user/getActions/:
     post:
       consumes:
@@ -201,12 +179,12 @@ paths:
       description: Get Actions the User was involved in
       operationId: get-actions
       parameters:
-      - description: User ID and Date
+      - description: User ID and Date (Month and Year)
         in: body
         name: input
         required: true
         schema:
-          $ref: '#/definitions/avito.User'
+          $ref: '#/definitions/avito.UserGetActions'
       produces:
       - application/json
       responses:
@@ -232,14 +210,14 @@ paths:
           description: ""
           schema:
             $ref: '#/definitions/handler.errorResponse'
-      summary: Get User Actions By ID and Date
+      summary: View User's Actions
       tags:
       - User
   /user/getSegments/{id}:
     get:
       consumes:
       - application/json
-      description: Get Segments the User is in
+      description: Returns segments the user with given UserID is in
       operationId: get-segments
       parameters:
       - description: User's ID
@@ -273,6 +251,45 @@ paths:
           schema:
             $ref: '#/definitions/handler.errorResponse'
       summary: Get User Segments By ID
+      tags:
+      - User
+  /user/removeFromSegment:
+    post:
+      consumes:
+      - application/json
+      description: Removes user with a given UserID from specified segment(s)
+      operationId: remove-user-from-segments
+      parameters:
+      - description: UserID and segment name(s)
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/avito.UserRemoveFromSegment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Remove User from Segment(s)
       tags:
       - User
 swagger: "2.0"

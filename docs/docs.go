@@ -18,7 +18,7 @@ const docTemplate = `{
     "paths": {
         "/segment/create": {
             "post": {
-                "description": "Create a Segment",
+                "description": "Creates a segment with a given name",
                 "consumes": [
                     "application/json"
                 ],
@@ -77,7 +77,7 @@ const docTemplate = `{
         },
         "/segment/delete": {
             "post": {
-                "description": "Delete a Segment",
+                "description": "Deletes a segment with a given name",
                 "consumes": [
                     "application/json"
                 ],
@@ -96,7 +96,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/avito.Segment"
+                            "$ref": "#/definitions/avito.SegmentRemove"
                         }
                     }
                 ],
@@ -136,7 +136,7 @@ const docTemplate = `{
         },
         "/user/addToSegment": {
             "post": {
-                "description": "Add Segments to User's list",
+                "description": "Adds user with a given UserID to specified segment(s)",
                 "consumes": [
                     "application/json"
                 ],
@@ -150,71 +150,12 @@ const docTemplate = `{
                 "operationId": "add-user-to-segments",
                 "parameters": [
                     {
-                        "description": "User ID and segments",
+                        "description": "UserID and segment name(s)",
                         "name": "input",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/avito.User"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    },
-                    "default": {
-                        "description": "",
-                        "schema": {
-                            "$ref": "#/definitions/handler.errorResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/user/deleteFromSegment": {
-            "post": {
-                "description": "Remove Segments from User's list",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "Remove User from Segment(s)",
-                "operationId": "remove-user-from-segments",
-                "parameters": [
-                    {
-                        "description": "User ID and segments",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/avito.User"
+                            "$ref": "#/definitions/avito.UserAddToSegment"
                         }
                     }
                 ],
@@ -264,16 +205,16 @@ const docTemplate = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "Get User Actions By ID and Date",
+                "summary": "View User's Actions",
                 "operationId": "get-actions",
                 "parameters": [
                     {
-                        "description": "User ID and Date",
+                        "description": "User ID and Date (Month and Year)",
                         "name": "input",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/avito.User"
+                            "$ref": "#/definitions/avito.UserGetActions"
                         }
                     }
                 ],
@@ -316,7 +257,7 @@ const docTemplate = `{
         },
         "/user/getSegments/{id}": {
             "get": {
-                "description": "Get Segments the User is in",
+                "description": "Returns segments the user with given UserID is in",
                 "consumes": [
                     "application/json"
                 ],
@@ -373,6 +314,65 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/user/removeFromSegment": {
+            "post": {
+                "description": "Removes user with a given UserID from specified segment(s)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Remove User from Segment(s)",
+                "operationId": "remove-user-from-segments",
+                "parameters": [
+                    {
+                        "description": "UserID and segment name(s)",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/avito.UserRemoveFromSegment"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/handler.errorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -390,19 +390,18 @@ const docTemplate = `{
                 }
             }
         },
-        "avito.User": {
+        "avito.SegmentRemove": {
             "type": "object",
-            "required": [
-                "id"
-            ],
             "properties": {
-                "TTL": {
-                    "type": "integer"
-                },
+                "seg_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "avito.UserAddToSegment": {
+            "type": "object",
+            "properties": {
                 "id": {
-                    "type": "integer"
-                },
-                "month": {
                     "type": "integer"
                 },
                 "seg_names": {
@@ -411,8 +410,36 @@ const docTemplate = `{
                         "type": "string"
                     }
                 },
+                "ttl": {
+                    "type": "integer"
+                }
+            }
+        },
+        "avito.UserGetActions": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "month": {
+                    "type": "integer"
+                },
                 "year": {
                     "type": "integer"
+                }
+            }
+        },
+        "avito.UserRemoveFromSegment": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "seg_names": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },
