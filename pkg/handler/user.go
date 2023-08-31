@@ -77,7 +77,7 @@ func (h *Handler) getUserActions(c *gin.Context) {
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
-// @Router /user/addToSegment [post]
+// @Router /user/addToSegment/ [post]
 func (h *Handler) addUserToSegment(c *gin.Context) {
 	var input avito.User
 
@@ -108,7 +108,7 @@ func (h *Handler) addUserToSegment(c *gin.Context) {
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
-// @Router /user/removeFromSegment [post]
+// @Router /user/removeFromSegment/ [post]
 func (h *Handler) removeUserFromSegment(c *gin.Context) {
 	var input avito.User
 

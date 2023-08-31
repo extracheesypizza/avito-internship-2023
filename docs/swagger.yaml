@@ -55,7 +55,7 @@ info:
   title: Avito App API
   version: "1.0"
 paths:
-  /segment/create:
+  /segment/create/:
     post:
       consumes:
       - application/json
@@ -94,7 +94,7 @@ paths:
       summary: Create a Segment
       tags:
       - Segment
-  /segment/delete:
+  /segment/delete/:
     post:
       consumes:
       - application/json
@@ -133,7 +133,7 @@ paths:
       summary: Delete a Segment
       tags:
       - Segment
-  /user/addToSegment:
+  /user/addToSegment/:
     post:
       consumes:
       - application/json
@@ -253,7 +253,7 @@ paths:
       summary: Get User Segments By ID
       tags:
       - User
-  /user/removeFromSegment:
+  /user/removeFromSegment/:
     post:
       consumes:
       - application/json

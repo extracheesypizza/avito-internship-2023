@@ -9,7 +9,7 @@
     "host": "localhost:8000",
     "basePath": "/",
     "paths": {
-        "/segment/create": {
+        "/segment/create/": {
             "post": {
                 "description": "Creates a segment with a given name",
                 "consumes": [
@@ -68,7 +68,7 @@
                 }
             }
         },
-        "/segment/delete": {
+        "/segment/delete/": {
             "post": {
                 "description": "Deletes a segment with a given name",
                 "consumes": [
@@ -127,7 +127,7 @@
                 }
             }
         },
-        "/user/addToSegment": {
+        "/user/addToSegment/": {
             "post": {
                 "description": "Adds user with a given UserID to specified segment(s)",
                 "consumes": [
@@ -308,7 +308,7 @@
                 }
             }
         },
-        "/user/removeFromSegment": {
+        "/user/removeFromSegment/": {
             "post": {
                 "description": "Removes user with a given UserID from specified segment(s)",
                 "consumes": [

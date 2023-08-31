@@ -18,7 +18,7 @@ import (
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
-// @Router /segment/create [post]
+// @Router /segment/create/ [post]
 func (h *Handler) createSegment(c *gin.Context) {
 	var input avito.Segment
 
@@ -49,7 +49,7 @@ func (h *Handler) createSegment(c *gin.Context) {
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
-// @Router /segment/delete [post]
+// @Router /segment/delete/ [post]
 func (h *Handler) deleteSegment(c *gin.Context) {
 	var input avito.Segment
 

@@ -16,7 +16,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/segment/create": {
+        "/segment/create/": {
             "post": {
                 "description": "Creates a segment with a given name",
                 "consumes": [
@@ -75,7 +75,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/segment/delete": {
+        "/segment/delete/": {
             "post": {
                 "description": "Deletes a segment with a given name",
                 "consumes": [
@@ -134,7 +134,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/addToSegment": {
+        "/user/addToSegment/": {
             "post": {
                 "description": "Adds user with a given UserID to specified segment(s)",
                 "consumes": [
@@ -315,7 +315,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/removeFromSegment": {
+        "/user/removeFromSegment/": {
             "post": {
                 "description": "Removes user with a given UserID from specified segment(s)",
                 "consumes": [
