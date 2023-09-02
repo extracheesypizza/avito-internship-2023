@@ -43,19 +43,41 @@ func (h *Handler) getUserSegments(c *gin.Context) {
 // @ID get-actions
 // @Accept  json
 // @Produce  json
-// @Param input body avito.UserGetActions true "User ID and Date (Month and Year)"
+// @Param id path int true "User ID"
+// @Param year path int true "Year"
+// @Param month path int true "Month"
 // @Success 200 {array} string
 // @Failure 400,404 {object} errorResponse
 // @Failure 500 {object} errorResponse
 // @Failure default {object} errorResponse
-// @Router /user/getActions/ [post]
+// @Router /user/getActions/{id}/{year}/{month} [get]
 func (h *Handler) getUserActions(c *gin.Context) {
-	var input avito.User
-
-	if err := c.BindJSON(&input); err != nil {
+	usr_id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
 		newErrorResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
+	year, err := strconv.Atoi(c.Param("year"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+	month, err := strconv.Atoi(c.Param("month"))
+	if err != nil {
+		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	input := avito.User{
+		Id:    usr_id,
+		Year:  year,
+		Month: month,
+	}
+
+	// if err := c.BindJSON(&input); err != nil {
+	// 	newErrorResponse(c, http.StatusBadRequest, err.Error())
+	// 	return
+	// }
 
 	slice, err := h.services.GetUserActions(input)
 	if err != nil {

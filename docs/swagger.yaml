@@ -25,15 +25,6 @@ definitions:
       ttl:
         type: integer
     type: object
-  avito.UserGetActions:
-    properties:
-      id:
-        type: integer
-      month:
-        type: integer
-      year:
-        type: integer
-    type: object
   avito.UserRemoveFromSegment:
     properties:
       id:
@@ -172,19 +163,28 @@ paths:
       summary: Add User to Segment(s)
       tags:
       - User
-  /user/getActions/:
-    post:
+  /user/getActions/{id}/{year}/{month}:
+    get:
       consumes:
       - application/json
       description: Get Actions the User was involved in
       operationId: get-actions
       parameters:
-      - description: User ID and Date (Month and Year)
-        in: body
-        name: input
+      - description: User ID
+        in: path
+        name: id
         required: true
-        schema:
-          $ref: '#/definitions/avito.UserGetActions'
+        type: integer
+      - description: Year
+        in: path
+        name: year
+        required: true
+        type: integer
+      - description: Month
+        in: path
+        name: month
+        required: true
+        type: integer
       produces:
       - application/json
       responses:

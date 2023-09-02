@@ -193,8 +193,8 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/getActions/": {
-            "post": {
+        "/user/getActions/{id}/{year}/{month}": {
+            "get": {
                 "description": "Get Actions the User was involved in",
                 "consumes": [
                     "application/json"
@@ -209,13 +209,25 @@ const docTemplate = `{
                 "operationId": "get-actions",
                 "parameters": [
                     {
-                        "description": "User ID and Date (Month and Year)",
-                        "name": "input",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/avito.UserGetActions"
-                        }
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Year",
+                        "name": "year",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Month",
+                        "name": "month",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -411,20 +423,6 @@ const docTemplate = `{
                     }
                 },
                 "ttl": {
-                    "type": "integer"
-                }
-            }
-        },
-        "avito.UserGetActions": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "month": {
-                    "type": "integer"
-                },
-                "year": {
                     "type": "integer"
                 }
             }
